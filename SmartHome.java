@@ -39,9 +39,24 @@ public class SmartHome {
             room.addDevice(thermostat);
 
             // Set Thermostat temperature
+           int thermostatTemp=0;
+           boolean validTemp=false;
+           while (!validTemp){
             System.out.println("Set thermostat temperature: ");
-            int thermostatTemp = Integer.parseInt(scanner.nextLine());
-            thermostat.setTemp(thermostatTemp);
+            String tempInput=scanner.nextLine();
+            try{
+                thermostatTemp=Integer.parseInt(tempInput);
+                validTemp=true;
+            }
+            catch(NumberFormatException e){
+                try{
+                    throw new InvalidTempException("Input must be an integer.");}
+                    catch(InvalidTempException exception){
+                        System.out.println(exception.getMessage());
+                    }
+                }
+
+           } thermostat.setTemp(thermostatTemp);
 
             roomStack.push(room);
             System.out.println("Room added: " + room.getRoomName());
@@ -155,9 +170,10 @@ if (powerChoice.equalsIgnoreCase("y")) {
     System.out.println("No device changes.");
 }
 
-System.out.println("\nRooms in the stack after power actions:");
+System.out.println("Summary:");
 for (int i = 0; i < roomStack.size(); i++) {
     Room r = roomStack.get(i);  // Get the room at index i
     r.showDevices();  // Print the devices in the room
 }
+scanner.close();
 }}

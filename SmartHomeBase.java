@@ -79,6 +79,11 @@ class Thermostat extends Device {
         return name + " : Temperature: " + temp + ", Power: " + (power ? "On" : "Off");
     }
 }
+class InvalidTempException extends Exception{
+    public InvalidTempException (String message){
+        super(message);
+    }
+}
 
 class Room {
     String roomName;
